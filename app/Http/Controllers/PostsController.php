@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Post;
-use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 
 class PostsController extends Controller
@@ -25,19 +24,26 @@ class PostsController extends Controller
 
     public function store(){
         $data = request()->validate([
-            'title' => 'required',
-            'city' => 'required',
-            'country' => 'required',
-            'postcode' => 'required',
-            'description' => 'required',
-            'image' => 'required|image',
+            'title' => ['required', 'string', 'min:3'],
+            'city' => ['required', 'string', 'min:3'],
+            'country' => ['required', 'string', 'min:3'],
+            'postcode' => ['required', 'string', 'min:3'],
+            'description' => ['required', 'string', 'min:3'],
+            'image_file' => ['image', 'max:500'],
         ]);
 
-        $imagePath = request('image')->store('uploads', 'public');
 
-        $image = Image::make(public_path("storage/{$imagePath}"))->fit(1200, 1200);
+        if(!empty($data['image_file'])) {
 
-        $image->save();
+            $imagePath = request('image_file')->store('uploads', 'public');
+
+            $image = Image::make(public_path("storage/{$imagePath}"))->fit(1200, 1200);
+
+            $image->save();
+        }
+        else {
+            $imagePath = '';
+        }
 
         auth()->user()->posts()->create([
             'title' => $data['title'],
@@ -47,9 +53,9 @@ class PostsController extends Controller
             'description' => $data['description'],
             'image' => $imagePath,
         ]);
-
         return redirect('/profile/' . auth()->user()->id);
     }
+
 
     public function show(\App\Post $post){
         return view('posts.show', compact('post'));

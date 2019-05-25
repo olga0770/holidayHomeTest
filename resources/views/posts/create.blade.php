@@ -10,6 +10,7 @@
                 <h2 class="col-md-6">Add New Post:</h2>
                 </div><hr>
 
+
                 <form action="/p" method="post" enctype="multipart/form-data">
                     @csrf
 
@@ -21,10 +22,7 @@
                                    class="form-control @error('title') is-invalid @enderror"
                                    name="title"
                                    value="{{ old('title') }}"
-                                   required autocomplete="name" autofocus>
-                            @error('title')
-                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                            @enderror
+                                   autocomplete="name" autofocus>
                         </div>
                     </div>
 
@@ -36,10 +34,7 @@
                                    class="form-control @error('city') is-invalid @enderror"
                                    name="city"
                                    value="{{ old('city') }}"
-                                   required autocomplete="city" autofocus>
-                            @error('city')
-                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                            @enderror
+                                   autocomplete="city" autofocus>
                         </div>
                     </div>
 
@@ -51,10 +46,7 @@
                                    class="form-control @error('country') is-invalid @enderror"
                                    name="country"
                                    value="{{ old('country') }}"
-                                   required autocomplete="country" autofocus>
-                            @error('country')
-                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                            @enderror
+                                   autocomplete="country" autofocus>
                         </div>
                     </div>
 
@@ -66,10 +58,7 @@
                                    class="form-control @error('postcode') is-invalid @enderror"
                                    name="postcode"
                                    value="{{ old('postcode') }}"
-                                   required autocomplete="postcode" autofocus>
-                            @error('postcode')
-                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                            @enderror
+                                   autocomplete="postcode" autofocus>
                         </div>
                     </div>
 
@@ -81,22 +70,33 @@
                                    class="form-control @error('description') is-invalid @enderror"
                                    name="description"
                                    value="{{ old('description') }}"
-                                   required autocomplete="description" autofocus>
-                            @error('description')
-                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                            @enderror
+                                   autocomplete="description" autofocus>
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="image" class="col-md-4 col-form-label text-md-right">Upload Image</label>
+                        <label for="image_file" class="col-md-4 col-form-label text-md-right">Upload Image</label>
                         <div class="col-md-6">
-                            <input type="file" id="image" name="image">
-                            @error('image')
-                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                            @enderror
+                            <input type="file"
+                                   id="image_file"
+                                   name="image_file"
+                                   class="@error('image_file') is-invalid @enderror">
                         </div>
                     </div>
+
+
+                    <div class="form-group row">
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                    </div>
+
 
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-4">

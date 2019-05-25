@@ -42,6 +42,7 @@
                     <a href="/p/{{ $post->id }}">
                         <img src="/storage/{{ $post->image }}" class="w-100">
                     </a>
+                    <p class="small">{{ $post->title }}</p>
                 </div>
             @endforeach
         </div>

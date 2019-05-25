@@ -21,7 +21,7 @@ class CreatePostsTable extends Migration
             $table->string('country');
             $table->string('postcode');
             $table->text('description');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->timestamps();
 
             $table->index('user_id');

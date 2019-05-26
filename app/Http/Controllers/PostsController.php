@@ -47,7 +47,7 @@ class PostsController extends Controller
             else {
                 //$request->input('image_file')->storeAs('images', $image_name, 's3');
 
-                $imagePath = $request->input('image_file')->store('holidayHomeTest/posts', 's3');
+                $imagePath = $request->file('image_file')->store('holidayHomeTest/posts', 's3');
 //                $image = Image::make(public_path("storage/{$imagePath}"))->fit(1200, 1200);
 //                $image->save();
             }

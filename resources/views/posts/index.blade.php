@@ -7,7 +7,12 @@
 
                 <div class="col-sm-12 col-md-4">
                     <a href="/p/{{ $post->id }}">
-                        @include('layouts.holiday-home-image')
+
+
+
+{{--                        {{$base_64_array[$post->id]}}--}}
+
+{{--                        @include('layouts.holiday-home-image')--}}
                     </a>
                     <p class="small">{{ $post->title }}</p>
                 </div>

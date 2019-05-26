@@ -45,6 +45,10 @@ class PostsController extends Controller
             else { // remote
                 // scaling happens elsewhere to relieve the web server
                 $imagePath = $request->file('image_file')->store('holidayHomeTest/posts', 's3');
+
+                // TODO
+                // Hi olga
+                // your image is at holidayHomeTest/user_profile.jpg
             }
         }
         else {

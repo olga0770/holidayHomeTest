@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 
 class PostsController extends Controller
@@ -22,8 +23,8 @@ class PostsController extends Controller
         return view('posts.create');
     }
 
-    public function store(){
-        $data = request()->validate([
+    public function store(Request $request){
+        $data = $request->validate([
             'title' => ['required', 'string', 'min:3'],
             'city' => ['required', 'string', 'min:3'],
             'country' => ['required', 'string', 'min:3'],
@@ -39,12 +40,14 @@ class PostsController extends Controller
             // todo  when running locally, use the old method
             // otherwise use S3
             if (env('APP_ENV')=='local') {
-                $imagePath = request('image_file')->store('uploads', 'public');
+                $imagePath = $request->image_file->store('uploads', 'public');
                 $image = Image::make(public_path("storage/{$imagePath}"))->fit(1200, 1200);
                 $image->save();
             }
             else {
-                $imagePath = request('image_file')->store('uploads', 'public', 's3');
+                //$request->input('image_file')->storeAs('images', $image_name, 's3');
+
+                $imagePath = $request->input('image_file')->store('holidayHomeTest/posts', 's3');
 //                $image = Image::make(public_path("storage/{$imagePath}"))->fit(1200, 1200);
 //                $image->save();
             }

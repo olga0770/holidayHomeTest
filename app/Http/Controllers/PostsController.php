@@ -44,9 +44,10 @@ class PostsController extends Controller
             }
             else { // remote
                 $imagePath = $request->file('image_file')->store('holidayHomeTest/posts', 's3');
-//                $image = Image::make(public_path("storage/{$imagePath}"))->fit(1200, 1200);
-//                $image->save();
 
+                $image = Image::make(Storage::disk('s3')->get($imagePath))->fit(1200, 1200);
+
+                Storage::disk('s3')->put($imagePath, $image);
             }
 
         }

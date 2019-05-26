@@ -5,7 +5,8 @@
         <div class="row">
 
             <div class="col-sm-12 col-md-6">
-                <img src="/storage/{{ $post->image }}" class="w-100">
+                <p>{{ $post->image }}</p>
+{{--                <img src="/storage/{{ $post->image }}" class="w-100">--}}
             </div>
 
             <div class="col-sm-12 col-md-6">

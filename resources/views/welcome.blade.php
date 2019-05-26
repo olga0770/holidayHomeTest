@@ -64,7 +64,7 @@
             <div class="row">
                 <div class="col-sm-12 col-md-4">
                     <a href="/p/{{ $post->id }}">
-                        <img src="/storage/{{ $post->image }}" class="w-100">
+                        @include('layouts.holiday-home-image')
                     </a>
                 </div>
 

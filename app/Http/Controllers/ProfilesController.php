@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Utils\RemoteImageUtil;
+use App\Post;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -35,7 +36,8 @@ class ProfilesController extends Controller
                 return $user->following->count();
             });
 
-        return view('profiles.index', compact('user','follows', 'postCount', 'followersCount', 'followingCount'));
+        $posts = Post::orderBy('created_at', 'desc')->paginate(3);
+        return view('profiles.index', compact('user','follows', 'postCount', 'followersCount', 'followingCount'))->with('base_64_array', RemoteImageUtil::get_image_array($posts));
     }
 
     public function edit(User $user){

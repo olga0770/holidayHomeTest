@@ -70,9 +70,7 @@
                         @else
                             <img src="/storage/{{ $post->image }}" class="w-100" alt="a picture of the holiday home">
                         @endif
-{{--
-                        @include('layouts.holiday-home-image')
---}}
+
                     </a>
                 </div>
 

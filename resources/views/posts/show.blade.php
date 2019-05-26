@@ -10,15 +10,13 @@
 
             <div class="col-sm-12 col-md-6">
                 <div class="d-flex align-items-center">
+                    <img src="/svg/user_profile.jpg" class="w-100 rounded-circle" style="max-width: 50px; max-height: 50px;" alt="profile">
 
-                    @if (!empty($post->user->profile->profileImage()))
-                        <img src="{{ $post->user->profile->profileImage() }}" class="w-100 rounded-circle" style="max-width: 50px; max-height: 50px;" alt="profile">
-                    @endif
+                    {{--                    @if (!empty($post->user->profile->profileImage()))
+                                            <img src="{{ $post->user->profile->profileImage() }}" class="w-100 rounded-circle" style="max-width: 50px; max-height: 50px;" alt="profile">
+                                        @endif--}}
 
                     <h3 class="pl-3"><a href="/profile/{{ $post->user->id }}">{{ $post->user->name }}</a></h3>
-{{--
-                    <a href="#" class="pl-3">Follow</a>
---}}
                 </div>
                 <hr>
                 <h2>{{ $post->title }}</h2>

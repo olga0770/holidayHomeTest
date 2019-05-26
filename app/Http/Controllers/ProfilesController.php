@@ -37,18 +37,12 @@ class ProfilesController extends Controller
                 return $user->following->count();
             });
 
-        if (env('APP_ENV') != 'local') { // use remote storage
-            $contents = Storage::disk('s3')->get($user->profile->image);
-            $base_64_img = base64_encode($contents);
-        }
-        else {
-            $base_64_img = '';
-        }
+
 
         $posts = Post::orderBy('created_at', 'desc')->paginate(3);
         return view('profiles.index', compact('user','follows', 'postCount', 'followersCount', 'followingCount'))
-            ->with('base_64_array', RemoteImageUtil::get_image_array($posts))
-            ->with('base_64_img', $base_64_img);
+            ->with('base_64_array', RemoteImageUtil::get_image_array($posts));
+
     }
 
     public function edit(User $user){
@@ -69,13 +63,9 @@ class ProfilesController extends Controller
 
         if(request('image')){
 
-            if (env('APP_ENV')=='local') {
-                $imagePath = request('image')->store('profile', 'public');
-                $image = Image::make(public_path("/storage/{$imagePath}"))->fit(1000, 1000);
-                $image->save();
-            } else {
-                $imagePath = request('image_file')->store('holidayHomeTest/profiles', 's3');
-            }
+            $imagePath = request('image')->store('profile', 'public');
+            $image = Image::make(public_path("/storage/{$imagePath}"))->fit(1000, 1000);
+            $image->save();
 
             $imageArray = ['image' => $imagePath];
         }

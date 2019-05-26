@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
 class PostsController extends Controller
@@ -36,22 +37,17 @@ class PostsController extends Controller
 
         if(!empty($data['image_file'])) {
 
-
-            // todo  when running locally, use the old method
-            // otherwise use S3
             if (env('APP_ENV')=='local') {
                 $imagePath = $request->image_file->store('uploads', 'public');
                 $image = Image::make(public_path("storage/{$imagePath}"))->fit(1200, 1200);
                 $image->save();
             }
-            else {
-                //$request->input('image_file')->storeAs('images', $image_name, 's3');
-
+            else { // remote
                 $imagePath = $request->file('image_file')->store('holidayHomeTest/posts', 's3');
 //                $image = Image::make(public_path("storage/{$imagePath}"))->fit(1200, 1200);
 //                $image->save();
-            }
 
+            }
 
         }
         else {
@@ -70,8 +66,17 @@ class PostsController extends Controller
     }
 
 
-    public function show(\App\Post $post){
-        return view('posts.show', compact('post'));
+    public function show(Post $post){
+
+        if (env('APP_ENV') != 'local') { // use remote storage
+            $contents = Storage::disk('s3')->get($post->image);
+            $base_64_img = base64_encode($contents);
+        }
+        else {
+            $base_64_img = '';
+        }
+
+        return view('posts.show', compact('post'))->with('base_64_img', $base_64_img);
     }
 
 }

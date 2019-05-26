@@ -86,6 +86,7 @@
 
 
                     <div class="form-group row">
+                        <div class="col-md-6 offset-md-4">
                         @if ($errors->any())
                             <div class="alert alert-danger">
                                 <ul>
@@ -95,6 +96,7 @@
                                 </ul>
                             </div>
                         @endif
+                        </div>
                     </div>
 
 

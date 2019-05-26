@@ -35,11 +35,21 @@ class PostsController extends Controller
 
         if(!empty($data['image_file'])) {
 
-            $imagePath = request('image_file')->store('uploads', 'public');
 
-            $image = Image::make(public_path("storage/{$imagePath}"))->fit(1200, 1200);
+            // todo  when running locally, use the old method
+            // otherwise use S3
+            if (env('APP_ENV')=='local') {
+                $imagePath = request('image_file')->store('uploads', 'public');
+                $image = Image::make(public_path("storage/{$imagePath}"))->fit(1200, 1200);
+                $image->save();
+            }
+            else {
+                $imagePath = request('image_file')->store('uploads', 'public', 's3');
+//                $image = Image::make(public_path("storage/{$imagePath}"))->fit(1200, 1200);
+//                $image->save();
+            }
 
-            $image->save();
+
         }
         else {
             $imagePath = '';

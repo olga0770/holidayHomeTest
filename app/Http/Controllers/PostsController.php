@@ -43,11 +43,10 @@ class PostsController extends Controller
                 $image->save();
             }
             else { // remote
+
+                // todo scale image before upload?
+
                 $imagePath = $request->file('image_file')->store('holidayHomeTest/posts', 's3');
-
-                $image = Image::make(Storage::disk('s3')->get($imagePath))->fit(1200, 1200);
-
-                Storage::disk('s3')->put($imagePath, $image);
             }
 
         }

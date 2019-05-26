@@ -9,10 +9,12 @@
                     <a href="/p/{{ $post->id }}">
 
 
+                        @if (!empty($base_64_array[$post->id]))
+                            <img src="data:image/png;base64, {{$base_64_array[$post->id]}}" class="w-100" alt="a picture of the holiday home"/>
+                        @else
+                            <img src="/storage/{{ $post->image }}" class="w-100" alt="a picture of the holiday home">
+                        @endif
 
-{{--                        {{$base_64_array[$post->id]}}--}}
-
-{{--                        @include('layouts.holiday-home-image')--}}
                     </a>
                     <p class="small">{{ $post->title }}</p>
                 </div>

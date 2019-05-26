@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Utils\RemoteImageUtil;
 use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -16,8 +17,8 @@ class PostsController extends Controller
 
     public function index(){
         $users = auth()->user()->following()->pluck('profiles.user_id');
-        $posts = Post::whereIn('user_id', $users)->with('user')->latest()->paginate(6);
-        return view('posts.index', compact('posts'));
+        $posts = Post::whereIn('user_id', $users)->with('user')->latest()->paginate(3);
+        return view('posts.index', compact('posts'))->with('base_64_array', RemoteImageUtil::get_image_array($posts));
     }
 
     public function create(){

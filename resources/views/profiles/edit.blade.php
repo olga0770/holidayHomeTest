@@ -22,10 +22,7 @@
                                    class="form-control @error('title') is-invalid @enderror"
                                    name="title"
                                    value="{{ old('title') ?? $user->profile->title }}"
-                                   required autocomplete="name" autofocus>
-                            @error('title')
-                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                            @enderror
+                                   autocomplete="name" autofocus>
                         </div>
                     </div>
 
@@ -37,10 +34,7 @@
                                    class="form-control @error('description') is-invalid @enderror"
                                    name="description"
                                    value="{{ old('description') ?? $user->profile->description }}"
-                                   required autocomplete="description" autofocus>
-                            @error('description')
-                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                            @enderror
+                                   autocomplete="description" autofocus>
                         </div>
                     </div>
 
@@ -48,11 +42,24 @@
                         <label for="image" class="col-md-4 col-form-label text-md-right">Profile Image</label>
                         <div class="col-md-6">
                             <input type="file" id="image" name="image">
-                            @error('image')
-                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                            @enderror
                         </div>
                     </div>
+
+
+                    <div class="form-group row">
+                        <div class="col-md-6 offset-md-4">
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+
 
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-4">

@@ -5,7 +5,6 @@
         <div class="row">
 
             <div class="col-sm-12 col-md-6">
-                <p>{{ $post->image }}</p>
 
                 @if (!empty($base_64_img))
                     <img src="data:image/png;base64, {{$base_64_img}}" class="w-100" alt="a picture of the holiday home"/>
@@ -17,7 +16,11 @@
 
             <div class="col-sm-12 col-md-6">
                 <div class="d-flex align-items-center">
-                    <img src="{{ $post->user->profile->profileImage() }}" class="w-100 rounded-circle" style="max-width: 50px; max-height: 50px;" alt="a picture of the profile user">
+
+                    @if (!empty($post->user->profile->profileImage()))
+                        <img src="{{ $post->user->profile->profileImage() }}" class="w-100 rounded-circle" style="max-width: 50px; max-height: 50px;" alt="profile">
+                    @endif
+
                     <h3 class="pl-3"><a href="/profile/{{ $post->user->id }}">{{ $post->user->name }}</a></h3>
 {{--
                     <a href="#" class="pl-3">Follow</a>
